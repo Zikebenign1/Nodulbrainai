@@ -1,0 +1,96 @@
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  
+  --color-brand: #ff9900;
+  --color-bg: #000;
+  --color-panel: #111;
+  --color-border: #222;
+  --color-neon: #00FBFF;
+  --color-med: #00ff88;
+  --color-story: #FF6B6B;
+}
+
+@layer base {
+  body {
+    @apply bg-black text-white font-sans antialiased select-none;
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    width: 100vw;
+    overflow: hidden;
+    /* Prevent elastic scrolling on iOS */
+    position: fixed;
+    touch-action: manipulation;
+  }
+
+  #root {
+    height: 100%;
+    width: 100%;
+  }
+
+  /* Allow selection only in specific areas */
+  .select-text {
+    @apply select-text;
+  }
+}
+
+@layer components {
+  .ticker-wrap {
+    @apply bg-brand/5 border-b border-border overflow-hidden h-[30px] flex items-center shrink-0;
+  }
+  
+  .ticker {
+    @apply inline-block whitespace-nowrap text-[10px] font-extrabold text-brand;
+    animation: marquee 30s linear infinite;
+  }
+  
+  @keyframes marquee {
+    0% { transform: translateX(100%); }
+    100% { transform: translateX(-100%); }
+  }
+
+  .bubble {
+    @apply max-w-[88%] p-4 rounded-[22px] mb-4 text-sm leading-relaxed shadow-lg;
+  }
+  
+  .bubble-ai {
+    @apply self-start bg-panel border border-border rounded-bl-none;
+  }
+  
+  .bubble-user {
+    @apply self-end bg-white text-black font-bold rounded-br-none;
+  }
+
+  .pill {
+    @apply bg-[#1a1a1a] border border-[#333] text-[#888] px-4 py-2 rounded-full text-[10px] font-extrabold whitespace-nowrap transition-all cursor-pointer shrink-0;
+  }
+  
+  .pill.active {
+    @apply bg-brand text-black border-brand shadow-[0_0_15px_rgba(255,153,0,0.3)];
+  }
+}
+
+/* Hide scrollbar but keep functionality */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Typography refinements */
+.markdown-body {
+  @apply leading-relaxed;
+}
+.markdown-body p {
+  @apply mb-2 last:mb-0;
+}
+.markdown-body strong {
+  @apply text-brand font-black;
+}
+
