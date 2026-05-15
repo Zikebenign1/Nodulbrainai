@@ -24,6 +24,7 @@
     /* Prevent elastic scrolling on iOS */
     position: fixed;
     touch-action: manipulation;
+    overscroll-behavior: none;
   }
 
   #root {
@@ -38,8 +39,12 @@
 }
 
 @layer components {
+  .chat-container {
+    @apply w-full max-w-4xl mx-auto px-4 sm:px-6;
+  }
+
   .ticker-wrap {
-    @apply bg-brand/5 border-b border-border overflow-hidden h-[30px] flex items-center shrink-0;
+    @apply bg-brand/5 border-b border-border overflow-hidden h-[30px] flex items-center shrink-0 w-full;
   }
   
   .ticker {
@@ -53,44 +58,66 @@
   }
 
   .bubble {
-    @apply max-w-[88%] p-4 rounded-[22px] mb-4 text-sm leading-relaxed shadow-lg;
+    @apply max-w-[85%] sm:max-w-[75%] p-4 rounded-3xl mb-4 text-sm leading-relaxed shadow-lg relative transition-all;
   }
   
   .bubble-ai {
-    @apply self-start bg-panel border border-border rounded-bl-none;
+    @apply self-start bg-[#121212] border border-white/5 text-white/90 rounded-bl-lg;
   }
   
   .bubble-user {
-    @apply self-end bg-white text-black font-bold rounded-br-none;
+    @apply self-end bg-white text-black font-semibold rounded-br-lg;
   }
 
   .pill {
-    @apply bg-[#1a1a1a] border border-[#333] text-[#888] px-4 py-2 rounded-full text-[10px] font-extrabold whitespace-nowrap transition-all cursor-pointer shrink-0;
+    @apply bg-[#1a1a1a] border border-[#333] text-[#888] px-4 py-2 rounded-full text-[10px] font-extrabold whitespace-nowrap transition-all cursor-pointer shrink-0 active:scale-95;
   }
   
   .pill.active {
-    @apply bg-brand text-black border-brand shadow-[0_0_15px_rgba(255,153,0,0.3)];
+    @apply bg-brand text-black border-brand shadow-[0_0_20px_rgba(255,153,0,0.4)];
   }
 }
 
-/* Hide scrollbar but keep functionality */
-.no-scrollbar::-webkit-scrollbar {
-  display: none;
+/* Custom Scrollbar for chat area */
+#chat::-webkit-scrollbar {
+  width: 5px;
 }
-.no-scrollbar {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
+#chat::-webkit-scrollbar-track {
+  background: transparent;
+}
+#chat::-webkit-scrollbar-thumb {
+  @apply bg-white/5 rounded-full;
+}
+#chat::-webkit-scrollbar-thumb:hover {
+  @apply bg-white/10;
+}
+
+#chat {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255,255,255,0.05) transparent;
   -webkit-overflow-scrolling: touch;
 }
 
 /* Typography refinements */
 .markdown-body {
-  @apply leading-relaxed;
+  @apply leading-relaxed tracking-normal;
 }
 .markdown-body p {
-  @apply mb-2 last:mb-0;
+  @apply mb-3 last:mb-0;
+}
+.markdown-body code {
+  @apply bg-white/10 px-1 py-0.5 rounded text-[0.9em] font-mono;
+}
+.markdown-body pre {
+  @apply bg-black/40 p-4 rounded-xl border border-white/5 my-3 overflow-x-auto;
 }
 .markdown-body strong {
   @apply text-brand font-black;
+}
+.markdown-body ul, .markdown-body ol {
+  @apply pl-5 my-2 space-y-1;
+}
+.markdown-body li {
+  @apply list-disc;
 }
 
